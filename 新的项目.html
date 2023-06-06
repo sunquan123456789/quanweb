@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>账号注册系统</title>
+</head>
+
+<body>
+    <h1>账号注册系统</h1>
+    <form onsubmit="submitForm(event)">
+        <label for="username">用户名：</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">密码：</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">注册</button>
+    </form>
+
+    <form onsubmit="login(event)">
+        <label for="login-username">用户名：</label>
+        <input type="text" id="login-username" name="login-username" required>
+
+        <label for="login-password">密码：</label>
+        <input type="password" id="login-password" name="login-password" required>
+
+        <button type="submit">登录</button>
+    </form>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); // 阻止表单提交
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            saveAccount(username, password); // 保存账号信息
+
+            alert('注册成功！');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function saveAccount(username, password) {
+            const account = { username, password };
+            const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+
+            accounts.push(account);
+            localStorage.setItem('accounts', JSON.stringify(accounts));
+        }
+
+        function login(event) {
+            event.preventDefault(); // 阻止表单提交
+
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+            const account = accounts.find(a => a.username === username && a.password === password);
+
+            if (account) {
+                alert('登录成功！');
+                window.location.href = 'https://www.bilibili.com';
+            } else {
+                alert('用户名或密码错误，请重试。');
+            }
+
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+        }
+    </script>
+</body>
+
+</html>
