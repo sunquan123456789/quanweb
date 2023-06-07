@@ -1,75 +1,41 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <title>账号注册系统</title>
+	<title>我的网站</title>
 </head>
-
 <body>
-    <h1>账号注册系统</h1>
-    <form onsubmit="submitForm(event)">
-        <label for="username">用户名：</label>
-        <input type="text" id="username" name="username" required>
-
-        <label for="password">密码：</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="submit">注册</button>
-    </form>
-
-    <form onsubmit="login(event)">
-        <label for="login-username">用户名：</label>
-        <input type="text" id="login-username" name="login-username" required>
-
-        <label for="login-password">密码：</label>
-        <input type="password" id="login-password" name="login-password" required>
-
-        <button type="submit">登录</button>
-    </form>
-
-    <script>
-        function submitForm(event) {
-            event.preventDefault(); // 阻止表单提交
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            saveAccount(username, password); // 保存账号信息
-
-            alert('注册成功！');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-        }
-
-        function saveAccount(username, password) {
-            const account = { username, password };
-            const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-
-            accounts.push(account);
-            localStorage.setItem('accounts', JSON.stringify(accounts));
-        }
-
-        function login(event) {
-            event.preventDefault(); // 阻止表单提交
-
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-
-            const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
-            const account = accounts.find(a => a.username === username && a.password === password);
-
-            if (account) {
-                alert('登录成功！');
-                window.location.href = 'https://www.bilibili.com';
-            } else {
-                alert('用户名或密码错误，请重试。');
-            }
-
-            document.getElementById('login-username').value = '';
-            document.getElementById('login-password').value = '';
-        }
-    </script>
+	<h1>我的链接</h1>
+	<ul>
+		<li><a href="https://www.google.com">Google</a></li>
+		<li><a href="https://www.github.com">GitHub</a></li>
+		<li><a href="https://www.youtube.com">YouTube</a></li>
+	</ul>
+	<h2>添加链接</h2>
+	<form>
+		<label for="link">链接地址：</label>
+		<input type="text" id="link" name="link"><br><br>
+		<label for="text">链接文本：</label>
+		<input type="text" id="text" name="text"><br><br>
+		<input type="button" value="添加链接" onclick="addLink()">
+	</form>
+	<script>
+		function addLink() {
+			var link = document.getElementById("link").value;
+			var text = document.getElementById("text").value;
+			if (link && text) {
+				var ul = document.querySelector("ul");
+				var li = document.createElement("li");
+				var a = document.createElement("a");
+				a.href = link;
+				a.innerHTML = text;
+				li.appendChild(a);
+				ul.appendChild(li);
+				document.getElementById("link").value = "";
+				document.getElementById("text").value = "";
+			} else {
+				alert("请填写链接地址和链接文本！");
+			}
+		}
+	</script>
 </body>
-
 </html>
